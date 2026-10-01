@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client Meeting Prep Automation</title>
+  <style>
+    body { font-family: Segoe UI, Arial, sans-serif; margin: 24px; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(280px, 1fr)); gap: 12px; }
+    input, textarea { width: 100%; padding: 8px; box-sizing: border-box; }
+    textarea { height: 90px; }
+    button { margin-top: 12px; padding: 10px 14px; }
+    pre { background: #111; color: #eee; padding: 12px; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <h1>Client Meeting Prep Automation</h1>
+  <p>Generate workflow-ready meeting briefs, change summaries, action checklists, and Office deliverable references.</p>
+
+  <div class="grid">
+    <input id="clientName" value="Anderson Family" placeholder="Client Name" />
+    <input id="advisorName" value="Advisor A" placeholder="Advisor Name" />
+    <input id="meetingDate" type="date" value="2026-10-15" />
+    <input id="openActionItems" value="Confirm beneficiary update|Review concentrated stock plan" placeholder="Open items separated by |" />
+  </div>
+
+  <h3>Last Meeting Summary</h3>
+  <textarea id="lastMeetingSummary">Reviewed retirement timing and liquidity reserves.</textarea>
+
+  <h3>Portfolio Changes Summary</h3>
+  <textarea id="portfolioChangesSummary">Equity allocation drifted above target after market gains.</textarea>
+
+  <h3>Planning Updates Summary</h3>
+  <textarea id="planningUpdatesSummary">Updated spending assumptions and near-term cash needs.</textarea>
+
+  <button id="generateBtn">Build Packet</button>
+  <pre id="output">Waiting...</pre>
+
+  <script>
+    document.getElementById('generateBtn').addEventListener('click', async () => {
+      const payload = {
+        clientName: document.getElementById('clientName').value,
+        advisorName: document.getElementById('advisorName').value,
+        meetingDate: document.getElementById('meetingDate').value,
+        lastMeetingSummary: document.getElementById('lastMeetingSummary').value,
+        portfolioChangesSummary: document.getElementById('portfolioChangesSummary').value,
+        planningUpdatesSummary: document.getElementById('planningUpdatesSummary').value,
+        openActionItems: document.getElementById('openActionItems').value.split('|').map(x => x.trim()).filter(Boolean)
+      };
+
+      const res = await fetch('/api/meeting-prep/build-packet', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json();
+      document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+    });
+  </script>
+</body>
+</html>

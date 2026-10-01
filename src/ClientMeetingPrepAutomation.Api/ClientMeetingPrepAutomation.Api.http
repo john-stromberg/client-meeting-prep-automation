@@ -1,0 +1,6 @@
+@ClientMeetingPrepAutomation.Api_HostAddress = http://localhost:5185
+
+GET {{ClientMeetingPrepAutomation.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
