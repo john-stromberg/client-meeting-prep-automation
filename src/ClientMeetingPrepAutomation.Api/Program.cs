@@ -21,10 +21,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseCors();
-app.UseDefaultFiles();
-app.UseStaticFiles();
 
+app.MapGet("/", () => Results.Ok(new { message = "Client Meeting Prep Automation API only. Use the dashboard UI for the interactive page." }));
 app.MapControllers();
-app.MapFallbackToFile("/index.html");
 
 app.Run();
