@@ -1,3 +1,8 @@
+> **Moved:** This project is maintained in [advisor-platform/projects/client-meeting-prep-automation](https://github.com/john-stromberg/advisor-platform/tree/main/projects/client-meeting-prep-automation).
+> This repository is retained as a historical snapshot.
+
+---
+
 # Client Meeting Prep Automation
 
 Workflow-oriented advisor tool for generating pre-meeting briefs, change summaries, action checklists, and Office-ready deliverable references.
